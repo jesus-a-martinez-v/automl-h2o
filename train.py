@@ -12,8 +12,11 @@ x = train.columns
 y = 'label'
 x.remove(y)
 
+train[y] = train[y].asfactor()
+test[y] = test[y].asfactor()
+
 print('[INFO] Running automatic machine learning process...')
-automl = H2OAutoML(max_models=30, seed=42)
+automl = H2OAutoML(max_models=30, seed=42, max_runtime_secs=500)
 automl.train(x=x, y=y, training_frame=train)
 
 print('[INFO] Models leader board:')
@@ -22,5 +25,8 @@ print(leader_board.head(rows=leader_board.nrow))
 
 print('[INFO] Leader/best model:')
 print(automl.leader)
+
+print('[INFO] Leader/best model cross-validation summary:')
+print(automl.leader.cross_validation_metrics_summary())
 
 predictions = automl.predict(test)
