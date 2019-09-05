@@ -16,7 +16,7 @@ train[y] = train[y].asfactor()
 test[y] = test[y].asfactor()
 
 print('[INFO] Running automatic machine learning process...')
-automl = H2OAutoML(max_models=30, seed=42, max_runtime_secs=500)
+automl = H2OAutoML(max_models=50, seed=42, max_runtime_secs=6 * 3600)
 automl.train(x=x, y=y, training_frame=train)
 
 print('[INFO] Models leader board:')
